@@ -1,0 +1,211 @@
+def GFII(p,q,v):
+    """
+    Outputs elements of finite field or Galois field GF(p^q). Where output all the polynomials
+    in the varible v that have coefficients less than input postive integer p 
+    and degree less than input positive integer q.
+    
+
+    EXAMPLES:
+
+    ::
+        
+        sage: p = 2; q = 3; v = var('x') 
+        sage: GFII(p,q,v)
+        [0, 1, x, x + 1, x^2, x^2 + 1, x^2 + x, x^2 + x + 1]
+        sage: p = 5; q = 2; v = var('x')
+        sage: GFII(p,q,v)
+        [0, 1, 2, 3, 4, x, x + 1, x + 2, x + 3, x + 4, 2*x, 2*x + 1, 2*x + 2, 2*x + 3, 2*x + 4,
+        3*x, 3*x + 1, 3*x + 2, 3*x + 3, 3*x + 4, 4*x, 4*x + 1, 4*x + 2, 4*x + 3, 4*x + 4]
+        sage: p = 1; d =1 ; v =var('x')
+        sage: GFII(p,q,v)
+        [0]
+
+        
+
+
+    AUTHORS:
+    - Alan Li and Wenxuan Lu
+    """
+    poly=[]
+    if q!=1:
+        for i in range(p):
+            new=[i*v^(q-1) +k for k in GFII(p,q-1,v)]
+            poly=poly+new
+    else: 
+        for i in range(p):
+            poly.append(i)
+    return poly
+def may_irreducible(p,q,v):
+    """
+    Outputs all polynomials in the variable v, and positive coefficients less than 
+    input integer p, and degree equal to input (q-1) (all output polynomials is in GF(p,q)) 
+    
+
+    EXAMPLES:
+
+    ::
+        
+        sage: p = 2; q = 2; v = var('x') 
+        sage: may_irreducible(2,2,x)
+        [x, x + 1]
+        sage: p = 3; q = 3; v = var('x')
+        sage: may_irreducible(3,3,x)
+        [x^2, x^2 + 1, x^2 + 2, x^2 + x, x^2 + x + 1, x^2 + x + 2, x^2 + 2*x, x^2 + 2*x + 1,
+         x^2 + 2*x + 2, 2*x^2, 2*x^2 + 1, 2*x^2 + 2, 2*x^2 + x, 2*x^2 + x + 1, 2*x^2 + x + 2,
+         2*x^2 + 2*x, 2*x^2 + 2*x + 1, 2*x^2 + 2*x + 2]
+        sage: p = 2; d =4; v =var('x')
+        sage: may_irreducible(2,4,x)
+        [x^3, x^3 + 1, x^3 + x, x^3 + x + 1, x^3 + x^2, x^3 + x^2 + 1, x^3 + x^2 + x,
+         x^3 + x^2 + x + 1]
+
+        
+
+    AUTHORS:
+    - Alan Li and Wenxuan Lu
+    """
+    if q<1:
+        return "q should >= 1"
+    field=GF2(p,q,v)
+    poly=[]
+    for i in range(1,p):
+        for j in field:
+            poly.append(i*v^(q-1)+j)
+    return poly
+def modulo_n(p,n,v):
+        """
+    Outputs result of polynomial modulo integer n. Where the input univariate polynomial p
+    in the variable input v modulo the input positive integer n. 
+
+    EXAMPLES:
+
+    ::
+        
+        sage: p = x^2+2*x+1; n = 2; v = var('x') 
+        sage: modulo_n(p,n,v)
+        [x^2 + 1]
+        sage: p = x^2+5*x+1; n = 3; v = var('x')
+        sage: modulo_n(p,n,v)
+        [x^2 + 2*x + 1]
+        sage: p = 4*x^3+3*x^2+2*x+1; n =2 ; v =var('x')
+        sage: modulo_n(p,n,v)
+        [x^2 + 1]
+
+        
+
+
+    AUTHORS:
+    - Alan Li and Wenxuan Lu
+    """
+        newp=0;
+        k=p.coefficients(v)
+        for i in range(len(k)):
+            if k[i][0]<n:
+                newp=newp+k[i][0]*x^k[i][1]
+            else:
+                newp=newp+(Integer(k[i][0])%n)*x^k[i][1]
+        return newp;
+def find_irreducible(c,d,v):
+    """
+    Outputs elements of all irrducible polynomials of finite field or Galois field GF(c^d). 
+    irrducible polynomials are defined as f(v) in input variable v,
+    such that if there do not exist two nonconstant polynomials g(v) and h(v) in input
+    variable v with integer coefficients such that f(x)=g(x)h(x).
+    Where all polynomial has positive coefficients less thaninput integer c, 
+    and degree less than or equal to input d
+    
+
+    EXAMPLES:
+
+    ::
+        
+        sage: p = 2; q = 2; v = var('x') 
+        sage: find_irreducible(2,2,x)
+        [x^2 + x + 1]
+        sage: p = 2; q = 4; v = var('x')
+        sage: find_irreducible(2,4,x)
+        [x^4 + x + 1, x^4 + x^3 + 1, x^4 + x^3 + x^2 + x + 1]
+        sage: p = 2; d =5 ; v =var('x')
+        sage: find_irreducible(2,5,x)
+        [x^5 + x^2 + 1, x^5 + x^3 + 1, x^5 + x^3 + x^2 + x + 1, x^5 + x^4 + x^2 + x + 1,
+         x^5 + x^4 + x^3 + x + 1, x^5 + x^4 + x^3 + x^2 + 1]
+
+        
+
+
+    AUTHORS:
+    - Alan Li and Wenxuan Lu
+    """
+    poly=may_irreducible(c,d+1,v);
+    
+    poly2=[]
+    for i in range(1,floor(d/2)+1):
+        first=[]
+        second=[]
+        
+        first=may_irreducible(c,i+1,v)
+        
+        second=may_irreducible(c,d-i+1,v)
+        
+        for i in first:
+            for j in second:
+                poly2.append(modulo_n(expand(i*j),c,v))
+    
+    for k in poly:
+        if k not in poly2:
+            print(k)
+  
+    def DivisionII(p,d,v):
+    """
+    Outputs result of the Euclidean division. Where the input
+    univariate polynomial p in the variable input v is the dividend
+    and the input univariate polynomial d in the input variable v is 
+    the divisor.
+    
+    Since it's a function for polynomial division, constant c must
+    be written as c*x^0.
+
+
+    EXAMPLES:
+
+    ::
+        
+        sage: p = 4*x^3+3*x^2+2*x+1; d = 5*x^2+3*x+7; v = var('x') 
+        sage: DivisionII(p,d,v)
+        [4/5*x + 3/25, -99/25*x + 4/25] 
+        sage: p = x^2+2*x+1; d = 2*x^0; v = var('x')
+        sage: DivisionII(p,d,v)
+        [1/2*x^2+x+1/2, 0]
+        sage: p = x^2+x+1; d =x^5 ; v =var('x')
+        sage: DivisionII(p,d,v)
+        [0, x^2+x+1]
+        sage: p = x^2+x+1; d =0*x^5 ; v =var('x')
+        sage: DivisionII(p,d,v)
+        "Invalid input, can't divided by zero!"
+        
+
+
+    AUTHORS:
+    - Alan Li and Wenxuan Lu
+    """
+    if p.degree(v)>=1 and d.degree(v)>=1:
+        p=p.expand(); d=d.expand()
+        q=0; r=p
+        while p.degree(v)>=d.degree(v):
+            L=(p.coefficient(v^p.degree(v))/d.coefficient(v^d.degree(v)))*v^(p.degree(v)-d.degree(v))
+            p=p-(L*d).expand()
+            q=q+L
+        r=p
+        return [q, r]
+    else:
+        if d.degree(v)==0:
+            if d==0*v^0:
+                return "Invalid input, can't divided by zero!"
+            else:
+                q=p/d
+                r=0
+                return[q,r]
+        if p.degree(v)==0:
+            q=0;
+            r=p;
+            return[q,r]
+        
