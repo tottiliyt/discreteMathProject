@@ -11,13 +11,13 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-This is a discrete math research project repository of Mathmetical experiments conducted by Professor Edinah K. Gnang at Johns Hopkins University and two of his students Alan Li and Wenxuan Lu. We are interested in the composition arithmetic of polynomials in the finite field. 
+This is a discrete math research project repository of Mathematical experiments conducted by Professor Edinah K. Gnang at Johns Hopkins University and two of his students Alan Li and Wenxuan Lu. We are interested in the composition arithmetic of polynomials in the finite field. 
 
-Discovered by French Mathmetician Évariste Galois, the finite field with p^n elements, or GF(p), where p is a prime number, is simply the ring of integers modulo p. In other words, one can perform arithmetic operations (addition, subtraction, multiplication) using the usual operation on integers, followed by reduction modulo p. Besides integer aritimetic, the similar property was discovered in polynomial arithmetic.
+Discovered by French Mathmetician Évariste Galois, the finite field with p^n elements, or GF(p), where p is a prime number, is simply the ring of integers modulo p. In other words, one can perform arithmetic operations (addition, subtraction, multiplication) using the usual operation on integers, followed by reduction modulo p. Other than integer arithmetic, similar properties of finite field was discovered in polynomial arithmetic.
 
 Finite field arithmetic on Wikipedia: https://en.wikipedia.org/wiki/Finite_field_arithmetic
 
-We want to explore if polynomial composition has the similar arithmetic properties in the finite field. Therefore, we started with using SageMath to implement functions that help with the computation of polynomial composition in the finite field.
+We want to explore if the polynomial composition has similar arithmetic properties in the finite field. Therefore, we started by using SageMath to implement functions that help with the computation of polynomial composition in the finite field.
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -29,7 +29,7 @@ Step 3. In SageMath Notebook, open the compositional_irreducible_mod2.ipynb in y
 
 ### Usage
 
-Use any functions in the .ipynb file to do the computation you want. All functions are comment with it's functionality and examples.
+Use any functions in the .ipynb file to do the computation you want. All functions are comment with their functionalities and examples.
 
 For example,
 ```Sage
